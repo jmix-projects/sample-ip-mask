@@ -9,6 +9,8 @@ There are several ways to implement protection. In the example for protection, t
     * Added **IpMatcher** (implementation from CUBA Platform)
     * Added **IpMaskValidationChecks**
 
+**IpMaskValidationChecks** uses _EventListener_ for handling PreAuthenticationCheckEvent and validate IP.
+
 The mask is a list of IP addresses, separated with commas. Both the IPv4 and IPv6 address formats are supported. 
 IPv4 address should consist of four numbers separated with periods. 
 IPv6 address represents eight groups of four hexadecimal characters separated with colons. 
@@ -16,8 +18,5 @@ The "*” symbol can be used in place of an address part, to match any value. On
 
 Example: _192.168.* .*_
 
-IpMaskValidationChecks uses _EventListener_ for handling PreAuthenticationCheckEvent and validate IP.
-
-For ip validation also can be used IpAddressMatcher.
 
 Based on Jmix Framework 1.0.0-SNAPSHOT with JDK 11.
