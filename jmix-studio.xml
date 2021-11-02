@@ -19,6 +19,19 @@
           </option>
         </ModuleSettings>
       </entry>
+      <entry key="sample-ip-mask-jmix.main">
+        <ModuleSettings>
+          <option name="dataStoreOptions">
+            <map>
+              <entry key="main">
+                <value>
+                  <DataStoreSettings />
+                </value>
+              </entry>
+            </map>
+          </option>
+        </ModuleSettings>
+      </entry>
     </moduleSettings>
   </component>
 </project>
