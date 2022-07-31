@@ -16,15 +16,10 @@
                   spacing="true"
                   stylename="jmix-login-panel"
                   width="AUTO">
-                <hbox id="loginTitleBox"
-                      align="MIDDLE_CENTER"
-                      spacing="true"
-                      stylename="jmix-login-title">
-                    <label id="welcomeLabel"
-                           align="MIDDLE_LEFT"
-                           stylename="jmix-login-caption"
-                           value="msg://welcomeLabel"/>
-                </hbox>
+                <label id="welcomeLabel"
+                       align="MIDDLE_CENTER"
+                       stylename="jmix-login-caption"
+                       value="msg://welcomeLabel"/>
 
                 <vbox id="loginForm"
                       spacing="true"
@@ -45,7 +40,7 @@
                           stylename="jmix-login-remember-locales">
                         <checkBox id="rememberMeCheckBox"
                                   caption="msg://loginScreen.rememberMe"
-                                  stylename="c-login-remember-me"/>
+                                  stylename="jmix-login-remember-me"/>
                         <comboBox id="localesField"
                                   nullOptionVisible="false"
                                   stylename="jmix-login-locale"

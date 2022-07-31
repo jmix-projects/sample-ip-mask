@@ -1,5 +1,7 @@
 package com.company.sampleipmaskjmix.entity;
 
+import io.jmix.core.HasTimeZone;
+import io.jmix.core.annotation.Secret;
 import io.jmix.core.entity.annotation.JmixGeneratedValue;
 import io.jmix.core.entity.annotation.SystemLevel;
 import io.jmix.core.metamodel.annotation.DependsOnProperties;
@@ -19,7 +21,7 @@ import java.util.UUID;
 @Table(name = "IPMASK_USER", indexes = {
         @Index(name = "IDX_IPMASK_USER_ON_USERNAME", columnList = "USERNAME", unique = true)
 })
-public class User implements JmixUserDetails {
+public class User implements JmixUserDetails, HasTimeZone {
 
     @Id
     @Column(name = "ID", nullable = false)
@@ -33,6 +35,7 @@ public class User implements JmixUserDetails {
     @Column(name = "USERNAME", nullable = false)
     protected String username;
 
+    @Secret
     @SystemLevel
     @Column(name = "PASSWORD")
     protected String password;
@@ -47,8 +50,11 @@ public class User implements JmixUserDetails {
     @Column(name = "EMAIL")
     protected String email;
 
-    @Column(name = "ENABLED")
-    protected Boolean enabled = true;
+    @Column(name = "ACTIVE")
+    protected Boolean active = true;
+
+    @Column(name = "TIME_ZONE_ID")
+    protected String timeZoneId;
 
     @Column(name = "IP_MASK")
     private String ipMask;
@@ -93,12 +99,12 @@ public class User implements JmixUserDetails {
         this.username = username;
     }
 
-    public Boolean getEnabled() {
-        return enabled;
+    public Boolean getActive() {
+        return active;
     }
 
-    public void setEnabled(Boolean enabled) {
-        this.enabled = enabled;
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     public void setPassword(String password) {
@@ -156,7 +162,7 @@ public class User implements JmixUserDetails {
 
     @Override
     public boolean isEnabled() {
-        return enabled;
+        return Boolean.TRUE.equals(active);
     }
 
     @InstanceName
@@ -164,5 +170,14 @@ public class User implements JmixUserDetails {
     public String getDisplayName() {
         return String.format("%s %s [%s]", (firstName != null ? firstName : ""),
                 (lastName != null ? lastName : ""), username).trim();
+    }
+
+    @Override
+    public String getTimeZoneId() {
+        return timeZoneId;
+    }
+
+    public void setTimeZoneId(String timeZoneId) {
+        this.timeZoneId = timeZoneId;
     }
 }

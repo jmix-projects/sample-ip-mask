@@ -2,15 +2,20 @@ package com.company.sampleipmaskjmix.screen.user;
 
 import com.company.sampleipmaskjmix.entity.User;
 import io.jmix.core.EntityStates;
+import io.jmix.core.security.event.SingleUserPasswordChangeEvent;
 import io.jmix.ui.Notifications;
+import io.jmix.ui.component.ComboBox;
 import io.jmix.ui.component.PasswordField;
 import io.jmix.ui.component.TextField;
+import io.jmix.ui.model.DataContext;
 import io.jmix.ui.navigation.Route;
 import io.jmix.ui.screen.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.Arrays;
 import java.util.Objects;
+import java.util.TimeZone;
 
 @UiController("ipmask_User.edit")
 @UiDescriptor("user-edit.xml")
@@ -28,7 +33,7 @@ public class UserEdit extends StandardEditor<User> {
     private PasswordField passwordField;
 
     @Autowired
-    private TextField usernameField;
+    private TextField<String> usernameField;
 
     @Autowired
     private PasswordField confirmPasswordField;
@@ -39,11 +44,24 @@ public class UserEdit extends StandardEditor<User> {
     @Autowired
     private MessageBundle messageBundle;
 
+    @Autowired
+    private ComboBox<String> timeZoneField;
+
+    private boolean isNewEntity;
+
     @Subscribe
     public void onInitEntity(InitEntityEvent<User> event) {
         usernameField.setEditable(true);
         passwordField.setVisible(true);
         confirmPasswordField.setVisible(true);
+        isNewEntity = true;
+    }
+
+    @Subscribe
+    public void onAfterShow(AfterShowEvent event) {
+        if (entityStates.isNew(getEditedEntity())) {
+            usernameField.focus();
+        }
     }
 
     @Subscribe
@@ -57,5 +75,17 @@ public class UserEdit extends StandardEditor<User> {
             }
             getEditedEntity().setPassword(passwordEncoder.encode(passwordField.getValue()));
         }
+    }
+
+    @Subscribe(target = Target.DATA_CONTEXT)
+    public void onPostCommit(DataContext.PostCommitEvent event) {
+        if (isNewEntity) {
+            getApplicationContext().publishEvent(new SingleUserPasswordChangeEvent(getEditedEntity().getUsername(), passwordField.getValue()));
+        }
+    }
+
+    @Subscribe
+    public void onInit(InitEvent event) {
+        timeZoneField.setOptionsList(Arrays.asList(TimeZone.getAvailableIDs()));
     }
 }

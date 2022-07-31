@@ -19,4 +19,4 @@ The "*” symbol can be used in place of an address part, to match any value. On
 Example: _192.168.* .*_
 
 
-Based on Jmix Framework 1.2.4 with JDK 11.
+Based on Jmix Framework 1.3.1 with JDK 11.

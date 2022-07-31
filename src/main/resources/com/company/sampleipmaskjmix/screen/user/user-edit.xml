@@ -39,8 +39,9 @@
                 <textField id="firstNameField" property="firstName"/>
                 <textField id="lastNameField" property="lastName"/>
                 <textField id="emailField" property="email"/>
+                <comboBox id="timeZoneField" property="timeZoneId"/>
+                <checkBox id="activeField" property="active"/>
                 <textField id="ipMaskField" property="ipMask"/>
-                <checkBox id="enabledField" property="enabled"/>
             </column>
         </form>
         <hbox id="editActions" spacing="true">
