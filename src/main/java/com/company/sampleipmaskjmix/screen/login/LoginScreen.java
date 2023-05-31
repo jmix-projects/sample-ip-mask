@@ -15,6 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.LockedException;
@@ -58,6 +59,12 @@ public class LoginScreen extends Screen {
     @Autowired
     private JmixApp app;
 
+    @Value("${ui.login.defaultUsername:}")
+    private String defaultUsername;
+
+    @Value("${ui.login.defaultPassword:}")
+    private String defaultPassword;
+
     @Subscribe
     private void onInit(InitEvent event) {
         usernameField.focus();
@@ -80,15 +87,13 @@ public class LoginScreen extends Screen {
     }
 
     private void initDefaultCredentials() {
-        String defaultUsername = loginProperties.getDefaultUsername();
-        if (!StringUtils.isBlank(defaultUsername) && !"<disabled>".equals(defaultUsername)) {
+        if (StringUtils.isNotBlank(defaultUsername)) {
             usernameField.setValue(defaultUsername);
         } else {
             usernameField.setValue("");
         }
 
-        String defaultPassword = loginProperties.getDefaultPassword();
-        if (!StringUtils.isBlank(defaultPassword) && !"<disabled>".equals(defaultPassword)) {
+        if (StringUtils.isNotBlank(defaultPassword)) {
             passwordField.setValue(defaultPassword);
         } else {
             passwordField.setValue("");
